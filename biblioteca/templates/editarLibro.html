@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content  %}
+
+    <div class="container">
+        <form action="{% url 'editarLibro' libro.pk %}" method='POST'>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Titulo</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="titulo"
+                    id="titulo"
+                    aria-describedby="helpId"
+                    placeholder="Titulo"
+                    value="{{ libro.titulo }}"
+                />
+            </div>
+            <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" name="descripcion" id="descripcion" rows="3">{{ libro.descripcion }}</textarea>
+        </div>
+            <div class="mb-3">
+                <label for="autor" clas='form-label'>Autor</label>
+                <select id="autor"
+                name="autor"
+                class="form-control">
+                    {% for autor in autores%}
+                        <option value="{{autor.id}}"
+                        {%if autor.id == autor.id %}
+                        selected
+                        {%endif%}
+                        >{{autor.nombre}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" class="btn btn-warning" value="Actualizar"/>
+        </form>
+        <div class="container mb-2">
+            <form action="{% url 'eliminarLibro' libro.pk %}"  method='POST'>
+                {% csrf_token %}
+                <input type="submit" class="btn btn-danger" value="Eliminar"/>
+            </form>
+        </div>
+    
+    </div>
+{% endblock content %}
